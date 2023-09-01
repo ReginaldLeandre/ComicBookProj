@@ -5,9 +5,11 @@
 #### application will have a home page
 #### it will also have a search page
 #### the user will be able to search for comic books directly or search a character and show all comic books based on that character
+    will use this end point GET /v1/public/characters/{characterId}/comics
 #### if the user searches by character, a selection of 10 results will appear;
     for example, if the user searched "spider-man" results like "spider-man", "venom-suit spider-man", "spider-man(miles morales)"
     this feature will use the "nameStartsWith" parameter provided by the marvel website.
+    nameStartsWith paramter will give room for the string vs other parameters that will require SPECIFIC name
 #### this application will have an inventory(quantity will use math.random)
     user will be able to select quantity
     message will display if the user tries to select a value more than inventory preventing the user from adding to cart
