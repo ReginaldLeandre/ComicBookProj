@@ -4,8 +4,23 @@
 require('dotenv').config();
 require('./config/database')
 const express = require('express');
+const cors = require('cors')
+const morgan = require('morgan')
+
+
 
 const charactersRouter = require('./routes/characters')
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -41,10 +56,47 @@ const app = express()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /***************************************************************************************
  *                                        MIDDLEWARE
  **************************************************************************************/
 app.use(express.json())
+app.use(cors())
+app.use(morgan('dev'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -63,6 +115,33 @@ app.use(express.json())
 // });
 
 app.use('/api', charactersRouter);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /***************************************************************************************

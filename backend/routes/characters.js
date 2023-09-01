@@ -3,7 +3,7 @@ const charactersCtrl = require('../controllers/characters');
 const router = express.Router()
 
 
-router.get('/characters', charactersCtrl.getMarvelCharacters);
+router.get('/characters', charactersCtrl.show);
 
 
 module.exports = router;
