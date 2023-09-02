@@ -5,7 +5,7 @@ const characterSchema = new mongoose.Schema({
     name: {type: String,
          required: true},
     description: String,
-    image: String 
+    thumbnail : String 
 }, {
     timestamps: true
 })
