@@ -4,7 +4,7 @@ const crypto = require('crypto');
 
 
 /***************************************************************************************************
- *                                         Boiler plate for accessing the api
+ *                                         Global Variables for API Access
  *                                                 
  ***************************************************************************************************/
 const ts = 1;
@@ -28,8 +28,7 @@ const getMarvelCharacters = async (req,res) => {
     try{
         const response = await axios.get(`${BASE_URL}/characters?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {
                     params: {
-                      limit: 10,
-                      nameStartsWith: "spider"
+                      limit: 10
                     }});
 
         // console.log(response);               
@@ -49,8 +48,84 @@ const getMarvelCharacters = async (req,res) => {
 
 
 
+const searchCharacter = async (req, res) => {
+    const name = req.body;
+    try{
+        const response = await axios.get(`${BASE_URL}/characters?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {
+                    params: {
+                      limit: 10,
+                      nameStartsWith: name
+                    }});
+
+        // console.log(response);               
+        // console.log(md5Hash)  
+        const character = response.data.data.results;
+        
+        res.json(character);
+        
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({
+            error: `Cannot Get Characters That Start With "${name}"` 
+        });
+    }
+};
+
+
+const showCharacter = async (req,res) => {
+
+    
+    try{
+        const characterResponse = await axios.get(`${BASE_URL}/characters/{characterId}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {});
+        
+
+        
+        console.log(characterResponse)                       
+        const characterData = characterResponse.data.data.results;
+        
+        //retrieving character values
+        const characterName = characterData.name;
+        const characterDescription = characterData.description; 
+        const comicsURI = characterData.comics.collectionURI            
+
+        const comicsResponse = await axios.get(`${comicsURI}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {
+            params: {
+              limit: 10
+            },
+          });
+
+
+
+          const comicsData = comicsResponse.data.data.results;
+
+          const characterComics = comicsData.map(comic => comic.title);
+
+
+          const characterInfo = {
+            name: characterName,
+            description: characterDescription,
+            comics: characterComics,
+          };
+
+        res.json(characterInfo);
+        
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({
+            error: "Cannot Get Character Details"
+        });
+    }
+
+
+};
+
+
 module.exports = {
-    show: getMarvelCharacters
+    list: getMarvelCharacters,
+    search: searchCharacter,
+    show: showCharacter
 };
 
 

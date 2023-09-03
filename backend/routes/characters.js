@@ -3,7 +3,9 @@ const charactersCtrl = require('../controllers/characters');
 const router = express.Router()
 
 
-router.get('/characters', charactersCtrl.show);
+router.get('/characters', charactersCtrl.list);
+router.get('/search/characters', charactersCtrl.search);
+router.get('/:id', charactersCtrl.show);
 
 
 module.exports = router;
