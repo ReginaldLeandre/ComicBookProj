@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-// const localHost = 'http://localhost:4000/'
+const localHost = 'http://localhost:4000/'
 
 const Characters = () => {
     const [characters, setCharacters] = useState(null);
@@ -8,7 +8,7 @@ const Characters = () => {
 
     useEffect(() => {
         const fetchCharacters = async () => {
-            const response = await fetch('api/characters');
+            const response = await fetch(`${localHost}api/characters`);
             const jsonResponse = await response.json();
 
 
@@ -27,7 +27,7 @@ const Characters = () => {
             <div className="charactersList">
                 
                 {characters && characters.map((character) => (
-                    <p key={character._id}>{character.name}</p>
+                    <div className="CharacterListings" key={character._id}><nav className="characterNav">{character.name}</nav></div>
 
                 ))}
 

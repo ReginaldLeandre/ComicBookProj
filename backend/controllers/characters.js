@@ -49,7 +49,7 @@ const getMarvelCharacters = async (req,res) => {
 
 
 const searchCharacter = async (req, res) => {
-    const name = req.body;
+    const { name } = req.query;
     try{
         const response = await axios.get(`${BASE_URL}/characters?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {
                     params: {

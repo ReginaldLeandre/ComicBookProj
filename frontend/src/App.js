@@ -6,7 +6,17 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 
 
+
+
+
+
+
+
 /*                                      Components                                                  */
+import Header from './components/Header/Header';
+import SearchPull from "./components/Search/SearchPull"
+
+
 
 
 
@@ -18,10 +28,15 @@ import Characters from "./pages/Characters/Characters"
 
 
 import {useState} from 'react'
+import { MainNav } from './components/Navigation';
 
 function App() {
   return (
     <div className="App">
+      <Header />
+
+
+      <SearchPull />
      <Routes>
         <Route path="/" element={<Characters />}>
         </Route>
