@@ -30,6 +30,25 @@
             
 
 
+Postman JSON example - 
+{
+    "name": "3-D Man",
+    "description": "",
+    "comics": [
+        "Avengers: The Initiative (2007) #19",
+        "Avengers: The Initiative (2007) #18",
+        "Avengers: The Initiative (2007) #18 (ZOMBIE VARIANT)",
+        "Avengers: The Initiative (2007) #17",
+        "Avengers: The Initiative (2007) #16",
+        "Avengers: The Initiative (2007) #15",
+        "Avengers: The Initiative (2007) #14 (SPOTLIGHT VARIANT)",
+        "Avengers: The Initiative (2007) #14",
+        "Deadpool (1997) #44",
+        "Marvel Premiere (1972) #37"
+    ]
+}            
+
+
 ## Ice box feature:
 
 #### this application will have a cart feature that will be avaliable to signed in users(ice-box feature) as well as non-signed in users
