@@ -11,7 +11,7 @@
     this feature will use the "nameStartsWith" parameter provided by the marvel website.
     nameStartsWith paramter will give room for the string vs other parameters that will require SPECIFIC name
 
-### MUST INCLUDE 3rd party OAuth2 
+### MUST INCLUDE 3rd party OAuth2.
 
 
 

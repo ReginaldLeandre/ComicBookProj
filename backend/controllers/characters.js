@@ -28,13 +28,16 @@ const getMarvelCharacters = async (req,res) => {
     try{
         const response = await axios.get(`${BASE_URL}/characters?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {
                     params: {
-                      limit: 10
+                      limit: 10,
                     }});
 
         // console.log(response);               
         // console.log(md5Hash)  
         const characters = response.data.data.results;
         
+        
+
+
         res.json(characters);
         
     }
@@ -74,20 +77,24 @@ const searchCharacter = async (req, res) => {
 
 
 const showCharacter = async (req,res) => {
-
+    
     
     try{
-        const characterResponse = await axios.get(`${BASE_URL}/characters/{characterId}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {});
+        const characterId = req.params.id;
+        const characterResponse = await axios.get(`${BASE_URL}/characters/${characterId}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {});
         
 
         
-        console.log(characterResponse)                       
+                               
         const characterData = characterResponse.data.data.results;
         
+
+           
+
         //retrieving character values
-        const characterName = characterData.name;
-        const characterDescription = characterData.description; 
-        const comicsURI = characterData.comics.collectionURI            
+        const characterName = characterData[0].name;
+        const characterDescription = characterData[0].description; 
+        const comicsURI = characterData[0].comics.collectionURI            
 
         const comicsResponse = await axios.get(`${comicsURI}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {
             params: {
