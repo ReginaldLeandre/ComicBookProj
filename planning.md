@@ -14,6 +14,20 @@
 ### MUST INCLUDE 3rd party OAuth2.
 
 
+### component tree
+        <App>
+  ├─ <Header>
+  ├─ <Home>
+  │    ├─ <Search>
+  │    └─ <SearchResults>
+  │         └─ <CharacterCard>
+  │              └─ <CharacterDetailsPage>
+  │                    ├─ <CharacterImage>
+  │                    ├─ <CharacterInfo>
+  │                    └─ <CharacterComics>
+  └─ <Footer>
+    (more to add)
+            
 
 
 ## Ice box feature:
