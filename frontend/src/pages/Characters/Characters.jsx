@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import "./Characters.css"
+import { Link } from "react-router-dom";
 
 const localHost = 'http://localhost:4000/'
 
@@ -12,10 +14,12 @@ const Characters = () => {
             const jsonResponse = await response.json();
 
 
-            if(response.ok){
-
-                setCharacters(jsonResponse)
-            }
+            if (response.ok) {
+                
+                const filteredCharacters = jsonResponse.filter(character => character.image);
+        
+                setCharacters(filteredCharacters);
+              }
         }
         fetchCharacters()
     }, {})
@@ -27,7 +31,13 @@ const Characters = () => {
             <div className="charactersList">
                 
                 {characters && characters.map((character) => (
-                    <div className="CharacterListings" key={character._id}><nav className="characterNav">{character.name}</nav></div>
+                    <div className="CharacterListings" key={character._id}> 
+                    <Link to={`/character/${character.id}`}>{character.name}{character.image && (
+                    <img className="characterImage" src={character.image} alt={character.name} />
+                      )}
+                      
+                      </Link>
+                      </div>
 
                 ))}
 

@@ -14,14 +14,16 @@ import { Routes, Route } from 'react-router-dom';
 
 /*                                      Components                                                  */
 import Header from './components/Header/Header';
-import SearchPull from "./components/Search/SearchPull"
+
 
 
 
 
 
 /*                                         pages                                                     */
-import Characters from "./pages/Characters/Characters"
+import Characters from "./pages/Characters/Characters";
+import SearchPull from "./pages/Search/SearchLogic/SearchPull";
+import CharacterDetails from './pages/CharacterDetails/CharacterDetails';
 
 
 
@@ -36,9 +38,14 @@ function App() {
       <Header />
 
 
-      <SearchPull />
+      
      <Routes>
+
         <Route path="/" element={<Characters />}>
+        </Route> 
+        <Route path="/search" element={<SearchPull />}>
+        </Route>
+        <Route path='/character/:id' element={<CharacterDetails />}>
         </Route>
 
 

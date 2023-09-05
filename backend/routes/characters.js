@@ -4,7 +4,7 @@ const router = express.Router()
 
 
 router.get('/characters', charactersCtrl.list);
-router.get('/search/characters', charactersCtrl.search);
+router.get('/search', charactersCtrl.search);
 router.get('/:id', charactersCtrl.show);
 
 
