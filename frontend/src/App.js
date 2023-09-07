@@ -1,23 +1,56 @@
 import logo from './logo.svg';
 import './App.css';
 
+
+/*                                      basic imports                                               */
+import { Routes, Route } from 'react-router-dom';
+
+
+
+
+
+
+
+
+/*                                      Components                                                  */
+import Header from './components/Header/Header';
+
+
+
+
+
+
+/*                                         pages                                                     */
+import Characters from "./pages/Characters/Characters";
+import SearchPull from "./pages/Search/SearchLogic/SearchPull";
+import CharacterDetails from './pages/CharacterDetails/CharacterDetails';
+import ComicDetails from './pages/ComicDetails/ComicDetails'
+
+
+
+
+import {useState} from 'react'
+import { MainNav } from './components/Navigation';
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+
+
+      
+     <Routes>
+
+        <Route path="/" element={<Characters />}>
+        </Route> 
+        <Route path="/search" element={<SearchPull />}>
+        </Route>
+        <Route path='/character/:id' element={<CharacterDetails />}>
+        </Route>
+        <Route path='/comics/:id' element={<ComicDetails />}>
+        </Route>
+
+     </Routes>
     </div>
   );
 }

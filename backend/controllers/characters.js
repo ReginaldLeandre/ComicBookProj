@@ -4,7 +4,7 @@ const crypto = require('crypto');
 
 
 /***************************************************************************************************
- *                                         Boiler plate for accessing the api
+ *                                         Global Variables for API Access
  *                                                 
  ***************************************************************************************************/
 const ts = 1;
@@ -21,21 +21,47 @@ const md5Hash = crypto.createHash('md5').update(concatenatedString).digest('hex'
 
 /**************************************************************************************************/
 
+/***************************************************************************************************
+ *                                             shuffling the results
+ * 
+ * *************************************************************************************************/
+
+// function randomizing(array) {
+//     for (let i = array.length - 1; i > 0; i--) {
+//         const j = Math.floor(Math.random() * (i + 1));
+//         [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+//     }
+// }
 
 // console.log(md5Hash)
+
+
 
 const getMarvelCharacters = async (req,res) => {
     try{
         const response = await axios.get(`${BASE_URL}/characters?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {
                     params: {
-                      limit: 10,
-                      nameStartsWith: "spider"
+                      limit: 20
                     }});
+                    // const characters = response.data.data.results;
 
-        // console.log(response);               
-        // console.log(md5Hash)  
-        const characters = response.data.data.results;
+
+
+                    const characters = response.data.data.results.map(character => {
+                        const characterId = character.id;
+                        const firstImage = character.thumbnail && character.thumbnail.path
+                          ? `${character.thumbnail.path}.${character.thumbnail.extension}`
+                          : null;
+                          return {
+                            name: character.name,
+                            id: characterId, //this id will help with the url 
+                            image: firstImage 
+                          };
+                        });
+                               
         
+                    
+
         res.json(characters);
         
     }
@@ -49,13 +75,156 @@ const getMarvelCharacters = async (req,res) => {
 
 
 
-module.exports = {
-    show: getMarvelCharacters
+const searchCharacter = async (req, res) => {
+    const { name } = req.query;
+    try{
+        const response = await axios.get(`${BASE_URL}/characters?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {
+                    params: {
+                      limit: 20,
+                      nameStartsWith: name
+                    }});
+
+    
+
+        const characters = response.data.data.results.map(character => {
+            const characterId = character.id;           
+            const firstImage = character.thumbnail && character.thumbnail.path
+              ? `${character.thumbnail.path}.${character.thumbnail.extension}`
+              : null;
+              return {
+                name: character.name,
+                id: characterId,
+                image: firstImage 
+              };
+            });
+        
+        res.json(characters);
+        
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({
+            error: `Cannot Get Characters That Start With "${name}"` 
+        });
+    }
 };
 
 
-
-
-
-
+const showCharacter = async (req, res) => {
+    try {
+      const characterId = req.params.id;
+      
+      
+      const characterResponse = await axios.get(`${BASE_URL}/characters/${characterId}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`);
+      const characterData = characterResponse.data.data.results[0];
+      
+      const characterName = characterData.name;
+      const characterDescription = characterData.description;
+      const charId = characterData.id
+      
+      const characterImageURL = `${characterData.thumbnail.path}.${characterData.thumbnail.extension}`;
   
+      
+      const comicsURI = characterData.comics.collectionURI;
+      const comicsResponse = await axios.get(`${comicsURI}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`, {
+        params: {
+          limit: 10
+        }
+      });
+  
+      const comicsData = comicsResponse.data.data.results;
+
+
+    
+      const characterComics = comicsData.map(comic => ({
+        title: comic.title,
+        description: comic.description,
+        id: comic.id,
+        image: `${comic.thumbnail.path}.${comic.thumbnail.extension}`
+      }));
+  
+      const characterInfo = {
+        name: characterName,
+        id: charId,
+        description: characterDescription,
+        image: characterImageURL, 
+        comics: characterComics,
+      };
+  
+      res.json(characterInfo);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        error: "Cannot Get Character Details"
+      });
+    }
+  };
+
+
+  const showComic = async (req, res) => {
+      ///comics/{comicId}
+    //collectionURI
+
+    // // "id": 1017603,
+    // "name": "Spider-Gwen (Gwen Stacy)",
+    // "description": "",
+    // "modified": "2021-06-30T17:29:14-0400",
+    // "thumbnail": {
+    //   "path": "http://i.annihil.us/u/prod/marvel/i/mg/c/90/54edf8eb8f102",
+    //   "extension": "jpg"
+      try{
+        const comicId = req.params.id;
+
+        const comicResponse = await axios.get(`${BASE_URL}/comics/${comicId}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`);
+
+        const comicsData = comicResponse.data.data.results[0];
+        const comictitle = comicsData.title
+        const comicDescription = comicsData.description
+        const comicBookId = comicsData.id
+        const comicRelease = comicsData.modified;
+        const comicImage = `${comicsData.thumbnail.path}.${comicsData.thumbnail.extension}`
+        const comicCharactersURI = comicsData.characters.collectionURI;
+        
+
+        const featuredCharacterResponse = await axios.get(`${comicCharactersURI}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`);
+        
+        const featuredCharacterData = featuredCharacterResponse.data.data.results;
+
+
+
+        const featuredChar = featuredCharacterData.map(character => ({
+          name: character.name,
+          id: character.id,
+          image: `${character.thumbnail.path}.${character.thumbnail.extension}`
+        }));
+
+
+        const comicBook = {
+          title: comictitle,
+          description: comicDescription,
+          id: comicBookId,
+          releaseDate: comicRelease,
+          image: comicImage,
+          featuredCharacters: featuredChar,
+
+        }
+
+
+        res.json(comicBook);
+
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({
+          error: "Cannot Get Comic Book Details"
+        });
+  
+          }    }
+
+
+
+module.exports = {
+    list: getMarvelCharacters,
+    search: searchCharacter,
+    show: showCharacter,
+    comic: showComic
+};

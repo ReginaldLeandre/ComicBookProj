@@ -1,0 +1,25 @@
+.Characters {
+    display: flex;
+    flex-wrap: wrap;
+  }
+ 
+  .CharacterListings {
+    flex: 0 0 calc(25% - 16px); 
+    margin: 8px;
+    text-align: center;
+    background-color: ;
+  }
+  
+
+  .characterImage {
+    max-width: 100px; 
+    max-height: 100px; 
+    display: block;
+    margin: 0 auto;
+  }
+  
+
+
+  .CharacterLink {
+    
+  }
