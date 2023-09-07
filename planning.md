@@ -62,3 +62,11 @@ Postman JSON example -
     user will be able to select quantity
     message will display if the user tries to select a value more than inventory preventing the user from adding to cart
 -   
+
+
+
+
+
+
+
+Link to Trello - https://trello.com/b/hfaFxyPe/comicbookstore

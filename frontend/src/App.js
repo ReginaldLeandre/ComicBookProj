@@ -24,7 +24,7 @@ import Header from './components/Header/Header';
 import Characters from "./pages/Characters/Characters";
 import SearchPull from "./pages/Search/SearchLogic/SearchPull";
 import CharacterDetails from './pages/CharacterDetails/CharacterDetails';
-
+import ComicDetails from './pages/ComicDetails/ComicDetails'
 
 
 
@@ -47,7 +47,8 @@ function App() {
         </Route>
         <Route path='/character/:id' element={<CharacterDetails />}>
         </Route>
-
+        <Route path='/comics/:id' element={<ComicDetails />}>
+        </Route>
 
      </Routes>
     </div>

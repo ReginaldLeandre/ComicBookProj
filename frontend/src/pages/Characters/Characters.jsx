@@ -32,7 +32,7 @@ const Characters = () => {
                 
                 {characters && characters.map((character) => (
                     <div className="CharacterListings" key={character._id}> 
-                    <Link to={`/character/${character.id}`}>{character.name}{character.image && (
+                    <Link className="CharacterLink" to={`/character/${character.id}`}>{character.name}{character.image && (
                     <img className="characterImage" src={character.image} alt={character.name} />
                       )}
                       

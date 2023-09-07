@@ -16,7 +16,13 @@ const MainNav = () => {
                 
                 
                 </Link>
-
+                <br></br>
+                <Link to="search">
+                
+                
+                    Search Character
+                
+                </Link>
 
             </div>
 

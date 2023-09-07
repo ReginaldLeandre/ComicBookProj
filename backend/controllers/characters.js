@@ -43,6 +43,9 @@ const getMarvelCharacters = async (req,res) => {
                     params: {
                       limit: 20
                     }});
+                    // const characters = response.data.data.results;
+
+
 
                     const characters = response.data.data.results.map(character => {
                         const characterId = character.id;
@@ -84,12 +87,13 @@ const searchCharacter = async (req, res) => {
     
 
         const characters = response.data.data.results.map(character => {
-        console.log(character.id)               
+            const characterId = character.id;           
             const firstImage = character.thumbnail && character.thumbnail.path
               ? `${character.thumbnail.path}.${character.thumbnail.extension}`
               : null;
               return {
                 name: character.name,
+                id: characterId,
                 image: firstImage 
               };
             });
@@ -129,8 +133,13 @@ const showCharacter = async (req, res) => {
       });
   
       const comicsData = comicsResponse.data.data.results;
+
+
+    
       const characterComics = comicsData.map(comic => ({
         title: comic.title,
+        description: comic.description,
+        id: comic.id,
         image: `${comic.thumbnail.path}.${comic.thumbnail.extension}`
       }));
   
@@ -150,10 +159,72 @@ const showCharacter = async (req, res) => {
       });
     }
   };
+
+
+  const showComic = async (req, res) => {
+      ///comics/{comicId}
+    //collectionURI
+
+    // // "id": 1017603,
+    // "name": "Spider-Gwen (Gwen Stacy)",
+    // "description": "",
+    // "modified": "2021-06-30T17:29:14-0400",
+    // "thumbnail": {
+    //   "path": "http://i.annihil.us/u/prod/marvel/i/mg/c/90/54edf8eb8f102",
+    //   "extension": "jpg"
+      try{
+        const comicId = req.params.id;
+
+        const comicResponse = await axios.get(`${BASE_URL}/comics/${comicId}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`);
+
+        const comicsData = comicResponse.data.data.results[0];
+        const comictitle = comicsData.title
+        const comicDescription = comicsData.description
+        const comicBookId = comicsData.id
+        const comicRelease = comicsData.modified;
+        const comicImage = `${comicsData.thumbnail.path}.${comicsData.thumbnail.extension}`
+        const comicCharactersURI = comicsData.characters.collectionURI;
+        
+
+        const featuredCharacterResponse = await axios.get(`${comicCharactersURI}?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${md5Hash}`);
+        
+        const featuredCharacterData = featuredCharacterResponse.data.data.results;
+
+
+
+        const featuredChar = featuredCharacterData.map(character => ({
+          name: character.name,
+          id: character.id,
+          image: `${character.thumbnail.path}.${character.thumbnail.extension}`
+        }));
+
+
+        const comicBook = {
+          title: comictitle,
+          description: comicDescription,
+          id: comicBookId,
+          releaseDate: comicRelease,
+          image: comicImage,
+          featuredCharacters: featuredChar,
+
+        }
+
+
+        res.json(comicBook);
+
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({
+          error: "Cannot Get Comic Book Details"
+        });
   
+          }    }
+
+
 
 module.exports = {
     list: getMarvelCharacters,
     search: searchCharacter,
-    show: showCharacter
+    show: showCharacter,
+    comic: showComic
 };
