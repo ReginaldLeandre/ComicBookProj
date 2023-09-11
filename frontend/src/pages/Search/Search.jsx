@@ -6,7 +6,6 @@ const localHost = 'http://localhost:4000/';
 
 const Search = () => {
   const [searchChar, setSearchChar] = useState('');
-  const [searchType, setSearchType] = useState('character'); 
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -17,40 +16,28 @@ const Search = () => {
   const handleSearch = async (query) => {
     try {
       setLoading(true);
-      let apiUrl = `${localHost}api/search`;
-      if (searchType === 'Comic') {
-        apiUrl = `${localHost}api/search/comics`;
-      }
-      const response = await fetch(`${apiUrl}?name=${query}`);
+      const response = await fetch(`${localHost}api/search?name=${query}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
       setSearchResults(data);
     } catch (error) {
-      console.error('Error searching:', error);
+      console.error('Error searching characters:', error);
       setSearchResults([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSelectChange = (e) => {
-    setSearchType(e.target.value);
-  };
-
   return (
     <div className="Search">
-      <h1>Marvel Search</h1>
+      <h1>Marvel Character Search</h1>
       <form onSubmit={(e) => { e.preventDefault(); handleSearch(searchChar); }}>
-        <select value={searchType} onChange={handleSelectChange}>
-          <option value="character">Character</option>
-          <option value="comic">Comic</option>
-        </select>
         <input
           className='searchBar'
           type="text"
-          placeholder={`Search by ${searchType === 'character' ? 'name' : 'title'}...`}
+          placeholder="Search by name..."
           value={searchChar}
           onChange={handleInputChange}
         />
@@ -60,23 +47,14 @@ const Search = () => {
         <p>Loading...</p>
       ) : (
         <ul>
-          {searchResults.map((result) => (
-            <li key={result.id}>
-              {searchType === 'character' ? (
-                <Link to={`/character/${result.id}`}>
-                  {result.name}
-                  {result.image && (
-                    <img className="resultImage" src={result.image} alt={result.name} />
-                  )}
-                </Link>
-              ) : (
-                <Link to={`/comic/${result.id}`}>
-                  {result.title}
-                  {result.thumbnail && (
-                    <img className="resultImage" src={result.thumbnail} alt={result.title} />
-                  )}
-                </Link>
-              )}
+          {searchResults.map((character) => (
+            <li key={character._id}>
+              <Link to={`/character/${character.id}`}>
+                {character.name}
+                {character.image && (
+                  <img className="characterImage" src={character.image} alt={character.name} />
+                )}
+              </Link>
             </li>
           ))}
         </ul>

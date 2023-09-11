@@ -42,7 +42,7 @@ function CharacterDetails({ character }) {
       <h2>Featured Comics: </h2>
       <ul>
         {characterData?.comics.map((comic, index) => (
-          <li className='characterComicListItem' key={index}>
+          <li className='characterComicListItem' key={comic.id}>
             <Link to={`/comics/${comic.id}`}>
             <h3 className='characterComicListTitle'>{comic.title}</h3>
             <img className='characterComicListImage' src={comic.image} alt={comic.title} />
