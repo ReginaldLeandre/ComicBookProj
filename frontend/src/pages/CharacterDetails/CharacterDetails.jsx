@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from "react-router-dom";
 import "./CharacterDetails.css"
+import { showCharacter } from '../../utilities/character-service'
 
 function CharacterDetails({ character }) {
   const [characterData, setCharacterData] = useState(null);
   const { id } = useParams();
+  const navigate = useNavigate();
 
-
+  async function handleRequest() {
+    const characterResponse = await showCharacter(id);
+    console.log(characterResponse)
+    if (characterResponse?.id) {
+    
+      setCharacterData(characterResponse);
+ 
+    } else {
+      navigate('/')
+    }
+  }
   
   useEffect(() => {
-    const localHost = 'http://localhost:4000/';
-
     
-
-
-
-    const fetchCharacterDetails = async () => {
-      try {
-        const response = await fetch(`${localHost}api/${id}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-        setCharacterData(data);
-      } catch (error) {
-        console.error('Error fetching character details:', error);
-      }
-    };
-
-    fetchCharacterDetails();
-  }, [id]); // Include 'id' as a dependency to re-fetch when 'id' changes
+    handleRequest()
+  }); 
 
   return (
     <div>

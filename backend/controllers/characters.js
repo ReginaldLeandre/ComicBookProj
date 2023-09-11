@@ -54,7 +54,7 @@ const getMarvelCharacters = async (req,res) => {
                     }});
                     // const characters = response.data.data.results;
 
-
+                      console.log(response)
 
                     const characters = response.data.data.results.map(character => {
                         const characterId = character.id;

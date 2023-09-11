@@ -1,27 +1,35 @@
 import { useEffect, useState } from "react";
 import "./Characters.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getCharacters } from "../../utilities/character-service";
 
-const localHost = 'http://localhost:4000/'
+
+
 
 const Characters = () => {
     const [characters, setCharacters] = useState(null);
+    const navigate = useNavigate()
 
+    // if (response.ok) {
+                
+    //     const filteredCharacters = jsonResponse.filter(character => character.image);
+
+    //     setCharacters(filteredCharacters);
+    //   }
+    async function handleRequest() {
+        const characterResponse = await getCharacters()
+    if (characterResponse.length) {
+        setCharacters(characterResponse);
+        
+      } else {
+        console.log(characterResponse);
+        // context update for error handling might be called
+      }
+    }
+  
 
     useEffect(() => {
-        const fetchCharacters = async () => {
-            const response = await fetch(`${localHost}api/characters`);
-            const jsonResponse = await response.json();
-
-
-            if (response.ok) {
-                
-                const filteredCharacters = jsonResponse.filter(character => character.image);
-        
-                setCharacters(filteredCharacters);
-              }
-        }
-        fetchCharacters()
+        handleRequest()
     }, {})
 
 

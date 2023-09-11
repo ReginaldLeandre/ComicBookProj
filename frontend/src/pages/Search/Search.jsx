@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Search.css';
 
-const localHost = 'http://localhost:4000/';
+const localHost = process.env.REACT_APP_BASE_URL;
 
 const Search = () => {
   const [searchChar, setSearchChar] = useState('');
