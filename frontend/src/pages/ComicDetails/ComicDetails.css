@@ -1,0 +1,87 @@
+div {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ComicTitle {
+  text-align: center;
+  font-size: 24px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+}
+
+.ComicDescription {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 0 auto 20px;
+  max-width: 80%;
+}
+
+.ComicImage {
+  width: 40%;
+  max-width: 300px;
+  border: 2px solid #333;
+  border-radius: 10px;
+  margin: 0 auto 10px;
+}
+
+.ComicPrice {
+  text-align: center;
+}
+
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  text-align: center;
+  margin: 0 10px 20px;
+  flex-basis: calc(33.33% - 20px);
+  max-width: calc(33.33% - 20px);
+}
+
+.FeaturedCharacterName {
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.FeaturedCharacterImage {
+  width: 100%;
+  max-width: 150px;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+.FeaturedCharacterListItem {
+  flex-basis: calc(33.33% - 10px);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.comicContainer {
+  flex-basis: calc(33.33% - 10px);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(99, 98, 147, 0.7);
+}

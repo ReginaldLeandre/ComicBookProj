@@ -22,7 +22,7 @@ import Header from './components/Header/Header';
 
 /*                                         pages                                                     */
 import Characters from "./pages/Characters/Characters";
-import SearchPull from "./pages/Search/SearchLogic/SearchPull";
+import Search from "./pages/Search/Search";
 import CharacterDetails from './pages/CharacterDetails/CharacterDetails';
 import ComicDetails from './pages/ComicDetails/ComicDetails'
 
@@ -30,27 +30,21 @@ import ComicDetails from './pages/ComicDetails/ComicDetails'
 
 
 import {useState} from 'react'
-import { MainNav } from './components/Navigation';
+import { UserContext } from './data';
+import Main from './components/Main/Main';
 
 function App() {
+  const [user, setUser] = useState(getUser())
+
+
+  
   return (
     <div className="App">
       <Header />
-
+      <Main />
 
       
-     <Routes>
-
-        <Route path="/" element={<Characters />}>
-        </Route> 
-        <Route path="/search" element={<SearchPull />}>
-        </Route>
-        <Route path='/character/:id' element={<CharacterDetails />}>
-        </Route>
-        <Route path='/comics/:id' element={<ComicDetails />}>
-        </Route>
-
-     </Routes>
+  
     </div>
   );
 }

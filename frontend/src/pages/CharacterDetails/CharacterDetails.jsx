@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import "./CharacterDetails.css"
 
 function CharacterDetails({ character }) {
   const [characterData, setCharacterData] = useState(null);
@@ -34,16 +35,18 @@ function CharacterDetails({ character }) {
 
   return (
     <div>
-      <h1>{characterData?.name}</h1>
-      <p>{characterData?.description}</p>
-      <img src={characterData?.image} alt={characterData?.name} />
+      <img className='characterImage' src={characterData?.image} alt={characterData?.name} />
+      <h1 className='characterName'>{characterData?.name}</h1>
+      <p className='characterDescription'>{characterData?.description}</p>
+      
       <h2>Featured Comics: </h2>
       <ul>
         {characterData?.comics.map((comic, index) => (
-          <li key={index}>
+          <li className='characterComicListItem' key={index}>
             <Link to={`/comics/${comic.id}`}>
-            <h3>{comic.title}</h3>
-            <img src={comic.image} alt={comic.title} />
+            <h3 className='characterComicListTitle'>{comic.title}</h3>
+            <img className='characterComicListImage' src={comic.image} alt={comic.title} />
+            <p>{comic.price}</p>
             </Link>
           </li>
         ))}
