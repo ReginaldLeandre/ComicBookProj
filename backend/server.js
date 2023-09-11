@@ -9,8 +9,8 @@ const morgan = require('morgan')
 
 
 
-const charactersRouter = require('./routes/characters')
-
+const charactersRouter = require('./routes/characters');
+const usersRouter = require('./routes/users');
 
 
 
@@ -115,7 +115,7 @@ app.use(morgan('dev'))
 // });
 
 app.use('/api', charactersRouter);
-
+app.use('/users', usersRouter);
 
 
 
