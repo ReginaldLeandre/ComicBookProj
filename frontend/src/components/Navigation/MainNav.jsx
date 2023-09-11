@@ -20,8 +20,8 @@ const MainNav = () => {
                     <h3 className='searchHeader'>Search </h3>
                 </Link>
            
-                <Link to="/signOut">
-                    <h3 className='LogOutHeader'>Log Out </h3>
+                <Link to="'/user/create">
+                    <h3 className='LogOutHeader'>Sign Up </h3>
                 </Link>
            
                 <Link to="/signIn">

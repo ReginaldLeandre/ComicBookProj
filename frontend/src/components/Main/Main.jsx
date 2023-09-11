@@ -7,7 +7,7 @@ import Search from "../../pages/Search/Search";
 import CharacterDetails from "../../pages/CharacterDetails/CharacterDetails";
 import ComicDetails from "../../pages/ComicDetails/ComicDetails";
 import Error404 from '../../pages/Error/index'
-
+// import SignUp from '../../pages/SignUp'
 
 
 
@@ -28,6 +28,8 @@ export default function Main(props) {
             </Route>
             <Route path='/comics/:id' element={<ComicDetails />}>
             </Route>
+            {/* <Route path='/user/create' element={<SignUp />}>
+            </Route> */}
 
             <Route path='/*' element={<Error404 />}>
 

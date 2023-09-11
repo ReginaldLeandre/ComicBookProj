@@ -1,25 +1,25 @@
-.Characters {
-    display: flex;
-    flex-wrap: wrap;
-  }
- 
-  .CharacterListings {
-    flex: 0 0 calc(25% - 16px); 
-    margin: 8px;
-    text-align: center;
-    background-color: ;
-  }
-  
+.CharacterListings {
+  flex-basis: calc(33.33% - 10px); 
+  margin-right: 10px;
+  margin-bottom: 10px; 
+  display: inline-block;
+  vertical-align: top; 
+  text-align: center;
+  border: 1px solid #333; 
+  border-radius: 10px;
+  padding: 10px; 
+  background-color: rgba(255, 255, 255, 0.7); 
+}
 
-  .characterImage {
-    max-width: 100px; 
-    max-height: 100px; 
-    display: block;
-    margin: 0 auto;
-  }
-  
+.CharacterName {
+  font-size: 18px;
+  margin-top: 5px; 
+}
 
 
-  .CharacterLink {
-    
-  }
+.characterImage {
+  width: 100%; 
+  max-width: 150px; 
+  border: 1px solid #333;
+  border-radius: 5px; 
+}

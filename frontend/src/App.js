@@ -34,7 +34,7 @@ import { UserContext } from './data';
 import Main from './components/Main/Main';
 
 function App() {
-  const [user, setUser] = useState(getUser())
+  const [user, setUser] = useState()
 
 
   
